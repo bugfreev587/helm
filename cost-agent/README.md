@@ -4,6 +4,13 @@ A Helm chart for deploying the Kubernetes cost monitoring agent.
 
 This is a standalone Helm chart repository. You only need this chart to deploy cost-agent to your Kubernetes cluster.
 
+## Version v1.0.11 Features
+
+- **Individual Pod Metrics**: Collects and sends detailed pod-level metrics (CPU/memory usage, requests, and limits)
+- **Enhanced Cost Analysis**: Enables accurate cost allocation by namespace and cluster
+- **Right-Sizing Support**: Provides data for resource utilization vs requests analysis
+- **Time-Series Trends**: Supports daily/weekly cost trend analysis
+
 ## Prerequisites
 
 - Kubernetes 1.19+
@@ -54,13 +61,13 @@ The following table lists the configurable parameters and their default values:
 |-----------|-------------|---------|
 | `replicaCount` | Number of replicas | `1` |
 | `image.repository` | Image repository | `ghcr.io/bugfreev587/cost-agent` |
-| `image.tag` | Image tag | `v1.0.10-amd64` |
+| `image.tag` | Image tag | `cost-agent-v1.0.11-amd64-20260105-234955-03be71d` |
 | `image.pullPolicy` | Image pull policy | `IfNotPresent` |
 | `config.serverUrl` | API server URL | `https://api-server-production-7a9d.up.railway.app/v1/ingest` |
 | `config.apiKeySecret.secretName` | Secret name for API key | `cost-agent-api-key` |
 | `config.apiKeySecret.secretKey` | Key in secret | `api-key` |
 | `config.clusterName` | Cluster name identifier | `cluster1` |
-| `config.collectInterval` | Collection interval (seconds) | `60` |
+| `config.collectInterval` | Collection interval (seconds) | `600` (10 minutes) |
 | `config.httpTimeout` | HTTP timeout (seconds) | `60` |
 | `config.useMetricsAPI` | Use Kubernetes Metrics API | `true` |
 | `config.namespaceFilter` | Namespace filter (empty = all) | `""` |
@@ -127,7 +134,7 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/bugfreev587/cost-agent
-  tag: "v1.0.10-amd64"
+  tag: "cost-agent-v1.0.11-amd64-20260105-234955-03be71d"
 
 config:
   serverUrl: "https://api-server-production-7a9d.up.railway.app/v1/ingest"
@@ -136,7 +143,7 @@ config:
     secretKey: "api-key"
     create: false
   clusterName: "production-cluster"
-  collectInterval: 60
+  collectInterval: 600
   httpTimeout: 60
   useMetricsAPI: true
   namespaceFilter: ""
@@ -223,7 +230,7 @@ To upgrade to a new version:
 ```bash
 # Update values
 helm upgrade cost-agent ./cost-agent \
-  --set image.tag="v1.0.11-amd64"
+  --set image.tag="cost-agent-v1.0.11-amd64-20260105-234955-03be71d"
 
 # Or with values file
 helm upgrade cost-agent ./cost-agent -f my-values.yaml

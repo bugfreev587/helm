@@ -6,7 +6,7 @@ replicaCount: 1
 image:
   repository: ghcr.io/bugfreev587/cost-agent
   pullPolicy: IfNotPresent
-  tag: "v1.0.10-amd64"
+  tag: "cost-agent-v1.0.11-amd64-20260105-234955-03be71d"
 
 imagePullSecrets:
   - name: ghcr-secret
@@ -50,7 +50,7 @@ config:
     value: ""
   
   clusterName: "cluster1"
-  collectInterval: 60  # seconds
+  collectInterval: 600  # seconds (10 minutes)
   httpTimeout: 60  # seconds
   useMetricsAPI: true
   namespaceFilter: ""  # empty = all namespaces
